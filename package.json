@@ -1,9 +1,12 @@
 {
-  "name": "sloth",
+  "name": "slothcommit",
   "version": "1.0.0",
   "description": "sloth is a opensource AI powered git commit assistant , it helps you write conventional git commit message based on your file change",
   "main": "src/index.js",
   "type": "module",
+  "bin": {
+    "sloth": "./src/index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "sloth": " node src/index.js"
