@@ -5,6 +5,27 @@ slothcommit is a opensource AI powered git commit assistant , it helps you write
 
 i hate thinking about commit messages manually , so what i used to (its huge pain in tha ass btw) use to copy my code to gpt and tell it to write commit message based on the changes made between old and new file and then manually paste it into terminal , so i decided to build sloth which does it all with one command.
 
+
+## installation
+
+- install 
+
+`npm i -g slothcommit`
+
+## Setup API Key
+- create a .env file inside your project where u intend to run slothcommit and add inside your .env :
+`
+GEMINI_API_KEY=<your key here>
+`
+## Usage
+- git add your required file
+
+- run
+
+`sloth
+`
+
+
 ## tech stack
 
 - Nodejs 
