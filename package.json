@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "sloth is a opensource AI powered git commit assistant , it helps you write conventional git commit message based on your file change",
   "main": "src/index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "sloth": " node src/index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/anshumancodes/sloth/issues"
   },
-  "homepage": "https://github.com/anshumancodes/sloth#readme"
+  "homepage": "https://github.com/anshumancodes/sloth#readme",
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "dotenv": "^17.3.1",
+    "simple-git": "^3.31.1"
+  }
 }
