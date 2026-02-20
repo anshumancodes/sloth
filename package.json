@@ -1,6 +1,6 @@
 {
   "name": "slothcommit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "sloth is a opensource AI powered git commit assistant , it helps you write conventional git commit message based on your file change",
   "main": "src/index.js",
   "type": "module",
