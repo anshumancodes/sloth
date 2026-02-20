@@ -1,5 +1,5 @@
 # slothcommit
-sloth is a opensource AI powered git commit assistant , it helps you write conventional git commit message based on your file change
+slothcommit is a opensource AI powered git commit assistant , it helps you write conventional git commit message based on your file change
 
 ## why i built this 
 
