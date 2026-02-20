@@ -14,6 +14,8 @@ i hate thinking about commit messages manually , so what i used to (its huge pai
 ![alt text](image.png)
 
 
+## sample 
+![alt text](sample.png)
 
 ## connect with me
 - for suggestions write me at anshumanprof01@gmail.com.
