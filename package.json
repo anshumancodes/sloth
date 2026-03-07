@@ -23,6 +23,7 @@
   "homepage": "https://github.com/anshumancodes/sloth#readme",
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
+    "conf": "^15.1.0",
     "dotenv": "^17.3.1",
     "simple-git": "^3.31.1"
   }
