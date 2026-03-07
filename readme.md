@@ -1,46 +1,87 @@
-# slothcommit
-slothcommit is a opensource AI powered git commit assistant , it helps you write conventional git commit message based on your file change
+# 🦥 slothcommit
 
-## why i built this 
+**slothcommit** is an open-source AI-powered Git commit assistant that generates clean **conventional commit messages** based on your staged file changes.
 
-i hate thinking about commit messages manually , so what i used to (its huge pain in tha ass btw) use to copy my code to gpt and tell it to write commit message based on the changes made between old and new file and then manually paste it into terminal , so i decided to build sloth which does it all with one command.
+Instead of manually writing commit messages, slothcommit analyzes your **git diff** and automatically generates a concise commit message.
 
 
-## installation
+## Features
 
-- install 
+- AI-generated commit messages after analyzing your changes
+-  Conventional commit format  
+-  One command workflow
 
-`npm i -g slothcommit`
+## Why I Built This
 
+I hate writing commit messages manually.
+
+Earlier my workflow looked like this:
+
+1. Copy my code changes  
+2. Paste them into GPT  
+3. Ask it to generate a commit message  
+4. Copy the result back to terminal  
+5. Finally run `git commit`
+
+It was slow and annoying.
+
+So I built **slothcommit** a small CLI that does everything in **one command**.
+
+
+
+## Installation
+
+Install globally via npm:
+
+```bash
+npm install -g slothcommit
+```
 ## Setup API Key
-- create a .env file inside your project where u intend to run slothcommit and add inside your .env :
-`
-GEMINI_API_KEY=<your key here>
-`
+
+The first time you run sloth, the CLI will prompt you for your Gemini API key and store it securely.
+
+You can get a key from Google AI. 
+[Google ai studio](https://aistudio.google.com/)
+
+```
+sloth
+Enter your Gemini API Key: ********
+```
+
+After that, it won't ask again.
 ## Usage
-- git add your required file
 
-- run
+- Stage your files
+git add .
+- Run sloth
+```sloth```
+- Done ,sloth generates a commit message for you.
 
-`sloth
-`
+Example output:
 
+```feat(auth): add refresh token middleware```
 
-## tech stack
+## Contributing
 
-- Nodejs 
+Contributions, ideas, and improvements are welcome.
 
-## how it works
+Open an issue or submit a PR.
 
-![alt text](image.png)
+- Connect With Me
 
+Suggestions are welcome.
 
-## sample 
-![alt text](sample.png)
+- Email: anshumanprof01@gmail.com
 
-## connect with me
-- for suggestions write me at anshumanprof01@gmail.com.
+- Blog
 
+https://anshumancdx.xyz/blog
 
-- explore my tech blog : [blog](anshumancdx.xyz/blog)
-- or subscribe to my newsletter [newsletter](https://newsletter.anshumancdx.xyz/)
+- Newsletter
+
+https://newsletter.anshumancdx.xyz/
+
+### Support the Project
+
+If you find this useful, consider giving the repo a star at
+[https://github.com/anshumancodes/sloth](https://github.com/anshumancodes/sloth)
