@@ -1,9 +1,27 @@
-import dotenv from "dotenv";
+import Conf from "conf";
+import readline from "node:readline/promises";
+import { stdin as input, stdout as output } from "node:process";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-dotenv.config();
+const config = new Conf({ projectName: "sloth" });
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+let apiKey = process.env.GEMINI_API_KEY || config.get("GEMINI_API_KEY");
+
+if (!apiKey) {
+  const inputFromTerminal = readline.createInterface({ input, output });
+
+  apiKey = await inputFromTerminal.question("Enter your Gemini API Key: ");
+  inputFromTerminal.close();
+
+  config.set("GEMINI_API_KEY", apiKey);
+  console.log("yay! API key saved for future use.");
+}
+
+
+if(!apiKey){
+  console.log("Missing Gemini api Key! please export it like export GEMINI_API_KEY=<YOUR KEY>")
+}
+const genAI = new GoogleGenerativeAI(apiKey);
 
 export async function generateCommitMessage(diff) {
   const model = genAI.getGenerativeModel({
