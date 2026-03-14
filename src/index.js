@@ -12,6 +12,22 @@ import {
  } from "./llm.js";
 
 const git = simpleGit();
+const args = process.argv.slice(2);
+
+// command: sloth --set-model <model-name>
+if (args[0] === "--set-model") {
+
+  const modelArg = args[1];
+  if (!modelArg) {
+    console.log("Available Models: ");
+    AVAILABLE_MODELS.forEach((m, i) => console.log(' ${i + 1}. ${m}'));
+
+    console.log("\nUsage: sloth --set-model <model-name>");
+    process.exit(0);
+  }
+  setModel(modelArg);
+  process.exit(0);
+}
 
 function askQuestion(query) {
   const rl = readline.createInterface({
