@@ -35,6 +35,21 @@ if(!apiKey){
 }
 const genAI = new GoogleGenerativeAI(apiKey);
 
+export function getCurrentModel(){
+
+  return config.get("GEMINI_MODEL") || DEFAULT_MODEL;
+}
+
+export function setModel(){
+  if (!AVAILABLE_MODELS.includes(modelName)) {
+
+    console.error('Invalid model. Available Models:\m${AVAILABLE_MODEL S.map((m, i) => `  ${i + 1}. ${m}`).join("\n")}`);');
+    process.exit(1);
+  }
+  config.set("GEMINI MODEL", modelName);
+  console.log("Model set to: ${modelName}");
+}
+
 export async function generateCommitMessage(diff) {
   const model = genAI.getGenerativeModel({
     model: "gemini-2.5-flash-lite", 
