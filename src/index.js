@@ -29,6 +29,13 @@ if (args[0] === "--set-model") {
   process.exit(0);
 }
 
+// command: sloth --model (shows the current model in use)
+if (agrs[0] === "--model") {
+
+  console.log('Current Model: ${getCurrentModel()}');
+  process.exit(0);
+}
+
 function askQuestion(query) {
   const rl = readline.createInterface({
     input: process.stdin,
