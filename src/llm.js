@@ -55,7 +55,7 @@ export async function promptModelSwitch() {
   const r1 = readline.createInterface({input, Output});
   console.log("\n Quota Exceeded...Select an Alternative Model: ");
   
-  AVAILABLE_MODELS.forEach((m, i)) => console.log(' ${1 + 1}. ${m}'));
+  AVAILABLE_MODELS.forEach((m, i) => console.log(' ${1 + 1}. ${m}'));
 
   const answer = await r1.question("\nEnter model number to switch (or Press Enter to cancel...)");
   r1.close();
