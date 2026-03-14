@@ -50,6 +50,28 @@ export function setModel(){
   console.log("Model set to: ${modelName}");
 }
 
+export async function promptModelSwitch() {
+
+  const r1 = readline.createInterface({input, Output});
+  console.log("\n Quota Exceeded...Select an Alternative Model: ");
+  
+  AVAILABLE_MODELS.forEach((m, i)) => console.log(' ${1 + 1}. ${m}'));
+
+  const answer = await r1.question("\nEnter model number to switch (or Press Enter to cancel...)");
+  r1.close();
+
+  const idx = parseInt(answer) - 1;
+  if (!isNaN(idx) && idx >= 0 && idx < AVAILABLE_MODELS.length) {
+
+    const chosen = AVAILABLE_MODELS[idx];
+    config.set("GEMINI_MODEL", chosen);
+    console.log("Switched to: ${chosen}\n");
+    return chosen;
+  }
+  return null;
+
+}
+
 export async function generateCommitMessage(diff) {
   const model = genAI.getGenerativeModel({
     model: "gemini-2.5-flash-lite", 
