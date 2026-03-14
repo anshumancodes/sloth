@@ -3,7 +3,13 @@
 import readline from "readline";
 import simpleGit from "simple-git";
 import { getStagedDiff } from "./git.js";
-import { generateCommitMessage } from "./llm.js";
+import { 
+  generateCommitMessage,
+  setModel,
+  getCurrentModel,
+  promptModelSwitch,
+  AVAILABLE_MODELS,
+ } from "./llm.js";
 
 const git = simpleGit();
 
