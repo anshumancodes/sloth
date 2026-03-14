@@ -53,7 +53,25 @@ function askQuestion(query) {
 async function run() {
   try {
     const diff = await getStagedDiff();
-    const message = await generateCommitMessage(diff);
+    let message;
+
+    try {
+      message = await generateCommitMessage(diff);
+    } catch (err) {
+      if (err.status === 429 || (err.message && err.message.includes ("429"))) {
+
+        const newModel = await promptModelSwitch();
+        if (newModel) {
+
+          message = await generateCommitMessage(diff);
+        } else {
+          console.log("Cancelled... Run 'sloth --set-model <model-name> to change models");
+          process.exit(1);
+        }
+      } else {
+        throw err;
+      }
+    }
 
     console.log("\n✨ Suggested Commit Message:\n");
     console.log(message);
