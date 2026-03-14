@@ -1,9 +1,21 @@
 import Conf from "conf";
 import readline from "node:readline/promises";
-import { stdin as input, stdout as output } from "node:process";
+import { availableMemory, stdin as input, stdout as output } from "node:process";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const config = new Conf({ projectName: "sloth" });
+
+export const AVAILABLE_MODELS = [
+
+  "gemini-2.5-flash-lite",
+  "gemini-2.5-flash",
+  "gemini-2.5-pro",
+  "gemini-2.0-flash",
+  "gemini-1.5-flash",
+  "gemini-1.5-pro",
+];
+
+const DEFAULT_MODEL = "gemini-2.5-flash-lite";
 
 let apiKey = process.env.GEMINI_API_KEY || config.get("GEMINI_API_KEY");
 
