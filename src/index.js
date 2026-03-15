@@ -3,9 +3,38 @@
 import readline from "readline";
 import simpleGit from "simple-git";
 import { getStagedDiff } from "./git.js";
-import { generateCommitMessage } from "./llm.js";
+import { 
+  generateCommitMessage,
+  setModel,
+  getCurrentModel,
+  promptModelSwitch,
+  AVAILABLE_MODELS,
+ } from "./llm.js";
 
 const git = simpleGit();
+const args = process.argv.slice(2);
+
+// command: sloth --set-model <model-name>
+if (args[0] === "--set-model") {
+
+  const modelArg = args[1];
+  if (!modelArg) {
+    console.log("Available Models: ");
+    AVAILABLE_MODELS.forEach((m, i) => console.log(`  ${i + 1}. ${m}`));
+
+    console.log("\nUsage: sloth --set-model <model-name>");
+    process.exit(0);
+  }
+  setModel(modelArg);
+  process.exit(0);
+}
+
+// command: sloth --model (shows the current model in use)
+if (args[0] === "--model") {
+
+  console.log(`Current Model: ${getCurrentModel()}`);
+  process.exit(0);
+}
 
 function askQuestion(query) {
   const rl = readline.createInterface({
@@ -24,7 +53,25 @@ function askQuestion(query) {
 async function run() {
   try {
     const diff = await getStagedDiff();
-    const message = await generateCommitMessage(diff);
+    let message;
+
+    try {
+      message = await generateCommitMessage(diff);
+    } catch (err) {
+      if (err.status === 429 || (err.message && err.message.includes ("429"))) {
+
+        const newModel = await promptModelSwitch();
+        if (newModel) {
+
+          message = await generateCommitMessage(diff);
+        } else {
+          console.log("Cancelled... Run 'sloth --set-model <model-name> to change models");
+          process.exit(1);
+        }
+      } else {
+        throw err;
+      }
+    }
 
     console.log("\n✨ Suggested Commit Message:\n");
     console.log(message);
