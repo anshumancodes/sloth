@@ -20,7 +20,7 @@ if (args[0] === "--set-model") {
   const modelArg = args[1];
   if (!modelArg) {
     console.log("Available Models: ");
-    AVAILABLE_MODELS.forEach((m, i) => console.log(' ${i + 1}. ${m}'));
+    AVAILABLE_MODELS.forEach((m, i) => console.log(`  ${i + 1}. ${m}`));
 
     console.log("\nUsage: sloth --set-model <model-name>");
     process.exit(0);
@@ -30,9 +30,9 @@ if (args[0] === "--set-model") {
 }
 
 // command: sloth --model (shows the current model in use)
-if (agrs[0] === "--model") {
+if (args[0] === "--model") {
 
-  console.log('Current Model: ${getCurrentModel()}');
+  console.log(`Current Model: ${getCurrentModel()}`);
   process.exit(0);
 }
 
