@@ -7,7 +7,7 @@ import {
   generateCommitMessage,
   setModel,
   getCurrentModel,
-  promptModelSwitch,
+  promptKeySwitch,
   AVAILABLE_MODELS,
  } from "./llm.js";
 
@@ -60,12 +60,12 @@ async function run() {
     } catch (err) {
       if (err.status === 429 || (err.message && err.message.includes ("429"))) {
 
-        const newModel = await promptModelSwitch();
+        const newModel = await promptKeySwitch();
         if (newModel) {
 
           message = await generateCommitMessage(diff);
         } else {
-          console.log("Cancelled... Run 'sloth --set-model <model-name> to change models");
+          console.log("Run `sloth --set-api-key <key>` when you have a new key.");
           process.exit(1);
         }
       } else {
