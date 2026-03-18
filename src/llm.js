@@ -63,7 +63,7 @@ export async function promptKeySwitch() {
   const r1 = readline.createInterface({input, output});
 
   console.log("\n API quota exhausted for the current key.");
-  const choice = await r1.question("Would you like to switch to a new API Key? (y/n");
+  const choice = await r1.question("Would you like to switch to a new API Key? (y/n): ");
 
   if (choice.trim().toLowerCase() !== "y") {
     r1.close();

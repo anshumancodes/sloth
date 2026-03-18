@@ -6,6 +6,7 @@ import { getStagedDiff } from "./git.js";
 import { 
   generateCommitMessage,
   setModel,
+  setApiKey,
   getCurrentModel,
   promptKeySwitch,
   AVAILABLE_MODELS,
@@ -48,6 +49,17 @@ function askQuestion(query) {
       resolve(ans.trim().toLowerCase());
     })
   );
+}
+
+// command: sloth --set-api-key <key>
+if (args[0] === "--set-api-key") {
+  const keyArg = args[1];
+  if (!keyArg) {
+    console.log("Usage: sloth --set-api-key <your-gemini-api-key>");
+    process.exit(0);
+  }
+  setApiKey(keyArg);
+  process.exit(0);
 }
 
 async function run() {
