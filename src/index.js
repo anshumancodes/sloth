@@ -6,8 +6,9 @@ import { getStagedDiff } from "./git.js";
 import { 
   generateCommitMessage,
   setModel,
+  setApiKey,
   getCurrentModel,
-  promptModelSwitch,
+  promptKeySwitch,
   AVAILABLE_MODELS,
  } from "./llm.js";
 
@@ -50,6 +51,17 @@ function askQuestion(query) {
   );
 }
 
+// command: sloth --set-api-key <key>
+if (args[0] === "--set-api-key") {
+  const keyArg = args[1];
+  if (!keyArg) {
+    console.log("Usage: sloth --set-api-key <your-gemini-api-key>");
+    process.exit(0);
+  }
+  setApiKey(keyArg);
+  process.exit(0);
+}
+
 async function run() {
   try {
     const diff = await getStagedDiff();
@@ -60,12 +72,12 @@ async function run() {
     } catch (err) {
       if (err.status === 429 || (err.message && err.message.includes ("429"))) {
 
-        const newModel = await promptModelSwitch();
+        const newModel = await promptKeySwitch();
         if (newModel) {
 
           message = await generateCommitMessage(diff);
         } else {
-          console.log("Cancelled... Run 'sloth --set-model <model-name> to change models");
+          console.log("Run `sloth --set-api-key <key>` when you have a new key.");
           process.exit(1);
         }
       } else {

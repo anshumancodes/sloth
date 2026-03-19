@@ -33,7 +33,8 @@ if (!apiKey) {
 if(!apiKey){
   console.log("Missing Gemini api Key! please export it like export GEMINI_API_KEY=<YOUR KEY>")
 }
-const genAI = new GoogleGenerativeAI(apiKey);
+
+let genAI = new GoogleGenerativeAI(apiKey);
 
 export function getCurrentModel(){
 
@@ -50,25 +51,37 @@ export function setModel(modelName){
   console.log(` Model set to: ${modelName}`);
 }
 
-export async function promptModelSwitch() {
+export function setApiKey(newKey) {
+
+  config.set("GEMINI_API_KEY", newKey);
+  genAI = new GoogleGenerativeAI(newKey);
+  console.log("API Key updated.");
+}
+
+export async function promptKeySwitch() {
 
   const r1 = readline.createInterface({input, output});
-  console.log("\n Quota Exceeded...Select an Alternative Model: ");
-  
-  AVAILABLE_MODELS.forEach((m, i) => console.log(`  ${i + 1}. ${m}`));
 
-  const answer = await r1.question("\nEnter model number to switch (or Press Enter to cancel...)");
+  console.log("\n API quota exhausted for the current key.");
+  const choice = await r1.question("Would you like to switch to a new API Key? (y/n): ");
+
+  if (choice.trim().toLowerCase() !== "y") {
+    r1.close();
+    console.log("Okay. Waiting until your credits are replenished.");
+    return false;
+  }
+
+  const newKey = await r1.question("Enter your new Gemini API Key: ");
   r1.close();
 
-  const idx = parseInt(answer) - 1;
-  if (!isNaN(idx) && idx >= 0 && idx < AVAILABLE_MODELS.length) {
+  if (!newKey.trim()) {
+    console.log("No key entered. Aborting...");
+    return false;
 
-    const chosen = AVAILABLE_MODELS[idx];
-    config.set("GEMINI_MODEL", chosen);
-    console.log(`Switched to: ${chosen}\n`);
-    return chosen;
   }
-  return null;
+  setApiKey(newKey.trim());
+  return true;
+
 
 }
 
