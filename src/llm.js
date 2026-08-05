@@ -110,3 +110,34 @@ ${diff}
 
   return response.text().trim();
 }
+
+export async function generatePRDescription(commitsContext, n) {
+  const model = genAI.getGenerativeModel({
+    model: getCurrentModel(),
+  });
+
+  const prompt = `
+You are an expert software engineer reviewing the last ${n} git commits to write a Pull Request summary.
+
+Output ONLY in this exact format (no extra text, no markdown code fences):
+
+Title: <concise PR title, max 72 chars>
+
+Description:
+- <change 1>
+- <change 2>
+- <change 3 (add more as needed)>
+
+Rules:
+- Title should follow conventional commit style (e.g. "feat: add user auth flow")
+- Description bullets should be short and specific (what changed, not how)
+- Max 6 bullet points
+- Do NOT include commit hashes or author names
+
+Commits:
+${commitsContext}
+`;
+
+  const result = await model.generateContent(prompt);
+  return result.response.text().trim();
+}
