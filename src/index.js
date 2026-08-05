@@ -2,15 +2,17 @@
 
 import readline from "readline";
 import simpleGit from "simple-git";
-import { getStagedDiff } from "./git.js";
+import { getStagedDiff, getLastNCommits } from "./git.js";
 import { 
   generateCommitMessage,
+  generatePRDescription,
   setModel,
   setApiKey,
   getCurrentModel,
   promptKeySwitch,
   AVAILABLE_MODELS,
  } from "./llm.js";
+
 
 const git = simpleGit();
 const args = process.argv.slice(2);
@@ -34,6 +36,26 @@ if (args[0] === "--set-model") {
 if (args[0] === "--model") {
 
   console.log(`Current Model: ${getCurrentModel()}`);
+  process.exit(0);
+}
+
+// command: sloth --pr [n]  — generate a PR title + description from last n commits
+if (args[0] === "--pr") {
+  const n = parseInt(args[1], 10) || 5;
+
+  console.log(`\n🔍 Analyzing last ${n} commit(s)...\n`);
+
+  try {
+    const commitsContext = await getLastNCommits(n);
+    const prContent = await generatePRDescription(commitsContext, n);
+
+    console.log("\n🚀 Suggested PR Title & Description:\n");
+    console.log(prContent);
+    console.log("");
+  } catch (err) {
+    console.error("Error generating PR description:", err.message);
+  }
+
   process.exit(0);
 }
 
@@ -89,9 +111,9 @@ async function run() {
     console.log(message);
     console.log("");
 
-    const answer = await askQuestion("Use this message? (y/n): ");
+    const answer = await askQuestion("Use this message? (Y/n): ");
 
-    if (answer === "y" || answer === "yes") {
+    if (answer === "y" || answer === "yes" || answer === "") {
       await git.commit(message);
       console.log("Commit created!");
     } else {
