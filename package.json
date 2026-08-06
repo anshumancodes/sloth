@@ -15,7 +15,20 @@
     "type": "git",
     "url": "git+https://github.com/anshumancodes/sloth.git"
   },
-  "author": "anshumancodes,AdityaPetkar2024",
+  "author": {
+    "name": "Anshuman Praharaj",
+    "url": "https://github.com/anshumancodes"
+  },
+  "contributors": [
+    {
+      "name": "Aditya Petkar",
+      "url": "https://github.com/AdityaPetkar2024"
+    },
+    {
+      "name": "Ushie",
+      "url": "https://github.com/ushiecodes"
+    }
+  ],
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/anshumancodes/sloth/issues"
